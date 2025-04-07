@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "1041724827879",
-    "project_id": "echoes-a6229",
-    "storage_bucket": "echoes-a6229.firebasestorage.app"
+    "project_number": "717629719201",
+    "project_id": "crud-9eff4",
+    "storage_bucket": "crud-9eff4.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1041724827879:android:bf2c1ba223723b0ad21a42",
+        "mobilesdk_app_id": "1:717629719201:android:c5777f576376b3597426e0",
         "android_client_info": {
           "package_name": "com.example.echoesapp"
         }
@@ -15,7 +15,45 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBbnwQeGW83w-JQ5KEu7Am2zRVQag5cxeU"
+          "current_key": "AIzaSyBoXLybN8wfUm_8IGNeGt6Y4ItrRlq1jsU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:717629719201:android:ee9fa078352dc13f7426e0",
+        "android_client_info": {
+          "package_name": "com.example.read_write"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoXLybN8wfUm_8IGNeGt6Y4ItrRlq1jsU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:717629719201:android:905a2aa0e5a617d27426e0",
+        "android_client_info": {
+          "package_name": "com.example.registerapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoXLybN8wfUm_8IGNeGt6Y4ItrRlq1jsU"
         }
       ],
       "services": {

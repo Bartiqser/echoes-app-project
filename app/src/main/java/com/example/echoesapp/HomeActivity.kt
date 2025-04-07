@@ -10,20 +10,26 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var logoutButton: Button
     private lateinit var auth: FirebaseAuth
+    private lateinit var addPostButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home) // Use the correct layout file
+        setContentView(R.layout.activity_home)
 
         auth = FirebaseAuth.getInstance()
         logoutButton = findViewById(R.id.logout_button)
+        addPostButton = findViewById(R.id.addPost_button)
 
         logoutButton.setOnClickListener {
             auth.signOut()
-            // Navigate back to MainActivityq
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-            finish() // Prevent user from going back to HomeActivity after logout
+            finish()
+        }
+
+        addPostButton.setOnClickListener {
+            val intent = Intent(this, AddPostActivity::class.java)
+            startActivity(intent)
         }
     }
 }

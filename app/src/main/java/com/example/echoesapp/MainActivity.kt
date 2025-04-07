@@ -14,20 +14,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main) // Replace with your layout file name
+        setContentView(R.layout.activity_main)
 
         auth = FirebaseAuth.getInstance()
-        loginButton = findViewById(R.id.login_button) // Make sure these IDs are in your layout
+        loginButton = findViewById(R.id.login_button)
         signupButton = findViewById(R.id.signin_button)
 
-        // Check if user is already logged in
         if (auth.currentUser != null) {
-            // User is logged in, navigate to HomeActivity
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
-            finish() // Prevent the user from coming back to MainActivity without logging out
+            finish()
         } else {
-            // User is not logged in, show login/signup options
             loginButton.setOnClickListener {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)

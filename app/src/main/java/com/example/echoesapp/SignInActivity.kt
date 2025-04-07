@@ -1,8 +1,12 @@
 package com.example.echoesapp
 
+import android.app.AlertDialog
+import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,6 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class SignInActivity : AppCompatActivity() {
 
+    private lateinit var loadingDialog: Dialog
     private lateinit var loginLink: TextView
     private lateinit var backArrowImageView: ImageView
     private lateinit var emailEditText: TextInputEditText
@@ -36,6 +41,7 @@ class SignInActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
+        loadingDialog = createLoadingDialog(this)
         loginLink = findViewById(R.id.login_link)
         backArrowImageView = findViewById(R.id.backArrow_imageView)
         emailEditText = findViewById(R.id.email_editText)
@@ -62,6 +68,7 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun registerUser() {
+        loadingDialog.show()
         val email = emailEditText.text.toString().trim()
         val confirmEmail = confirmEmailEditText.text.toString().trim()
         val username = usernameEditText.text.toString().trim()
@@ -74,16 +81,19 @@ class SignInActivity : AppCompatActivity() {
 
         if (email != confirmEmail) {
             confirmEmailInputLayout.error = "Emails do not match"
+            loadingDialog.dismiss()
             return
         }
 
         if (username.isEmpty()) {
             usernameInputLayout.error = "Username cannot be empty"
+            loadingDialog.dismiss()
             return
         }
 
         if (!isValidPassword(password)) {
             passwordInputLayout.error = "Password must be at least 6 characters, contain 1 number, and 1 capital letter"
+            loadingDialog.dismiss()
             return
         }
 
@@ -105,20 +115,24 @@ class SignInActivity : AppCompatActivity() {
                             .document(userId)
                             .set(userMap)
                             .addOnSuccessListener {
+                                loadingDialog.dismiss()
                                 Log.d("Firestore", "DocumentSnapshot added with ID: $userId")
                                 Toast.makeText(baseContext, "Registration successful.", Toast.LENGTH_SHORT).show()
                                 startActivity(Intent(this, HomeActivity::class.java))
                                 finish()
                             }
                             .addOnFailureListener { e ->
+                                loadingDialog.dismiss()
                                 Log.w("Firestore", "Error adding document", e)
                                 Toast.makeText(baseContext, "Firestore error: ${e.message}", Toast.LENGTH_SHORT).show()
                             }
                     } else {
+                        loadingDialog.dismiss()
                         Toast.makeText(baseContext, "User ID is null", Toast.LENGTH_SHORT).show()
                         Log.e("Registration", "User ID is null")
                     }
                 } else {
+                    loadingDialog.dismiss()
                     Log.w("Registration", "createUserWithEmail:failure", task.exception)
                 }
             }
@@ -129,5 +143,17 @@ class SignInActivity : AppCompatActivity() {
         val hasNumber = password.any { it.isDigit() }
         val hasCapitalLetter = password.any { it.isUpperCase() }
         return hasMinLength && hasNumber && hasCapitalLetter
+    }
+
+    private fun createLoadingDialog(context: Context): Dialog {
+        val builder = AlertDialog.Builder(context)
+        val inflater = LayoutInflater.from(context)
+        val dialogView = inflater.inflate(R.layout.loading_dialog, null)
+        builder.setView(dialogView)
+        builder.setCancelable(false)
+
+        val dialog = builder.create()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        return dialog
     }
 }

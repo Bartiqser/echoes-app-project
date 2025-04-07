@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">Echoes App</string>
+    <string name="app_name">Echoes</string>
+    <string-array name="genres">
+        <item>Pop</item>
+        <item>Rock</item>
+        <item>Hip Hop</item>
+        <item>Jazz</item>
+        <item>Classical</item>
+        <item>Other</item>
+    </string-array>
 </resources>
